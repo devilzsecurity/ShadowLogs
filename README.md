@@ -6,5 +6,7 @@ ShadowLog 🕵️‍♂️LD_PRELOAD-based logger that hooks execve to log execu
 
 Features
 ✅ Stealth Logging – Hooks execve to record commands without modifying binaries.
+
 ✅ User & TTY Tracking – Captures the username, TTY session, and timestamp for each command.
+
 ✅ Minimal Footprint – Runs as a shared library, injected dynamically with LD_PRELOAD.
