@@ -1,8 +1,8 @@
 # ShadowLogs
-ShadowLog 🕵️‍♂️ – A stealthy LD_PRELOAD-based logger that hooks execve to log executed commands, users, and TTY sessions without detection. Perfect for monitoring system activity while remaining invisible.
+ShadowLog 🕵️‍♂️LD_PRELOAD-based logger that hooks execve to log executed commands, users, and TTY sessions without detection. Perfect for monitoring system activity while remaining invisible.
 
 
- LD_PRELOAD-based command logger designed for stealthy process monitoring. By hooking the execve system call, it captures and logs every executed command along with user details and TTY session information while staying undetectable to standard system monitoring tools.
+ LD_PRELOAD-based command logger designed for process monitoring. By hooking the execve system call, it captures and logs every executed command along with user details and TTY session information while staying undetectable to standard system monitoring tools.
 
 Features
 ✅ Stealth Logging – Hooks execve to record commands without modifying binaries.
