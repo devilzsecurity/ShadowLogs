@@ -26,7 +26,7 @@ void log_command(const char *pathname, char *const argv[]) {
     if (!logfile) {
         logfile = fopen(LOG_FILE, "a");
         if (!logfile) {
-            perror("LOL!!! NOPE");
+            perror("Failed lol!!");
             return;
         }
     }
